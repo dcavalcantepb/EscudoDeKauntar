@@ -61,13 +61,13 @@ const Grid = (function(){
   }
   function persist(){ saveLocal(); saveCloud(); }
 
-  const isSpacer = id => typeof id === 'string' && id.startsWith('spacer:');
-
   /* junta o que foi salvo com a lista de ferramentas atual: uma ferramenta nova
      (ainda não salva) entra na primeira vaga livre; uma salva que não existe
-     mais é descartada. Posições inválidas (sobrepondo, ou fora das COLS — por
-     exemplo um layout salvo quando COLS era outro valor) são realocadas pra
-     primeira vaga livre, sem apagar as demais. */
+     mais é descartada (inclui qualquer "espaço vazio" salvo de uma versão
+     anterior — essa ideia foi abandonada, então some sozinho na próxima carga).
+     Posições inválidas (sobrepondo, ou fora das COLS — por exemplo um layout
+     salvo quando COLS era outro valor) são realocadas pra primeira vaga livre,
+     sem apagar as demais. */
   function reconcile(saved){
     entries = new Map();
     order = [];
@@ -78,47 +78,35 @@ const Grid = (function(){
     };
     for(const e of (saved || [])){
       const def = defs.find(d => d.id === e.id);
-      if(!def && !isSpacer(e.id)) continue;   // ferramenta que não existe mais
+      if(!def) continue;   // ferramenta que não existe mais
       add(e.id, e.w, e.h, e.x, e.y);
     }
     for(const d of defs) if(!entries.has(d.id)){ const s = defaultSize(d); add(d.id, s.w, s.h, null, null); }
   }
 
   function svgResize(){ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v6h6M20 10V4h-6M20 4 13 11M4 20l7-7"/></svg>'; }
-  function svgRemove(){ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>'; }
 
   function place(card, entry){
     card.style.gridColumn = `${entry.x} / span ${entry.w}`;
     card.style.gridRow = `${entry.y} / span ${entry.h}`;
   }
 
-  /* def é undefined pra um "espaço vazio" (spacer:*) — não é uma ferramenta,
-     é só uma célula reservada em branco, pra abrir respiro na grade. */
   function buildCard(id, def){
     const entry = entries.get(id);
     const card = document.createElement('div');
-    card.className = def ? 'card' : 'card card--spacer';
+    card.className = 'card';
     card.dataset.tool = id;
     place(card, entry);
 
     const head = document.createElement('div');
     head.className = 'card__head';
     head.draggable = true;
-    head.innerHTML = def
-      ? `<span class="card__icon">${def.icon}</span><span class="card__title">${def.title}</span>`
-      : `<span class="card__title muted">Espaço vazio</span>`;
+    head.innerHTML = `<span class="card__icon">${def.icon}</span><span class="card__title">${def.title}</span>`;
     const sizeBtn = document.createElement('button');
     sizeBtn.type = 'button'; sizeBtn.className = 'size-btn'; sizeBtn.title = 'Tamanho do card';
     sizeBtn.setAttribute('aria-haspopup', 'true'); sizeBtn.setAttribute('aria-expanded', 'false');
     sizeBtn.innerHTML = svgResize();
     head.appendChild(sizeBtn);
-    if(!def){
-      const rmBtn = document.createElement('button');
-      rmBtn.type = 'button'; rmBtn.className = 'size-btn'; rmBtn.title = 'Remover este espaço vazio';
-      rmBtn.innerHTML = svgRemove();
-      rmBtn.addEventListener('click', e => { e.stopPropagation(); card.remove(); entries.delete(id); order = order.filter(x => x !== id); persist(); });
-      head.appendChild(rmBtn);
-    }
 
     const body = document.createElement('div');
     body.className = 'card__body';
@@ -126,7 +114,7 @@ const Grid = (function(){
     card.append(head, body);
     wireDrag(card, head, entry);
     wireResize(card, sizeBtn, entry);
-    if(def) def.mount(body);
+    def.mount(body);
     return card;
   }
 
@@ -264,16 +252,6 @@ const Grid = (function(){
       saveLocal();
       container.innerHTML = '';
       for(const id of order) container.appendChild(buildCard(id, defs.find(d => d.id === id)));
-    },
-    /* acrescenta um espaço vazio na primeira vaga livre — pra abrir respiro na
-       grade. Arraste e redimensione como qualquer card; o × remove. */
-    addSpacer(){
-      const id = `spacer:${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-      const pos = primeiraVaga(1, 1);
-      entries.set(id, { w: 1, h: 1, ...pos });
-      order.push(id);
-      container.appendChild(buildCard(id, null));
-      persist();
     }
   };
 })();

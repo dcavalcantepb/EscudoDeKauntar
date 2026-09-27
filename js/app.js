@@ -22,8 +22,6 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
   location.reload();
 });
 
-document.getElementById('btnAddSpacer').addEventListener('click', () => Grid.addSpacer());
-
 let painelReady = false;
 async function showPainel(){
   gate.hidden = true;
