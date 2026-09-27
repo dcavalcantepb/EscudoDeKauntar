@@ -14,7 +14,14 @@ TOOLS.push({
       'Meio-Elfo': { f: ['Selanwe', 'Dara', 'Ilyanna', 'Marel', 'Yvaine', 'Sorel'], m: ['Aramel', 'Doran', 'Kestrel', 'Ivarel', 'Sael', 'Bren'] },
       'Orc': { f: ['Ghorza', 'Uluka', 'Nagra', 'Zasha', 'Mogra', 'Vurka'], m: ['Gorrath', 'Uzgul', 'Thokk', 'Vraggar', 'Mogul', 'Kazdak'] },
       'Draconato': { f: ['Sthara', 'Ixara', 'Mishaka', 'Perascis', 'Thava', 'Nala'], m: ['Balasar', 'Kriv', 'Rhogar', 'Torinn', 'Shamash', 'Vrondir'] },
-      'Tiefling': { f: ['Akta', 'Damaia', 'Ligeia', 'Orianna', 'Sairche', 'Zariel'], m: ['Akmenos', 'Barrakas', 'Ekemon', 'Iados', 'Mordai', 'Rakis'] }
+      'Tiefling': { f: ['Akta', 'Damaia', 'Ligeia', 'Orianna', 'Sairche', 'Zariel'], m: ['Akmenos', 'Barrakas', 'Ekemon', 'Iados', 'Mordai', 'Rakis'] },
+      'Meio-Orc': { f: ['Baggi', 'Emen', 'Kansif', 'Myev', 'Neega', 'Vola'], m: ['Dench', 'Feng', 'Holg', 'Krusk', 'Ront', 'Thokk'] },
+      /* Sem gênero biológico — o mesmo grupo de nomes serve pra "f" e "m" (nomes
+         curtos e evocativos, ao gosto do Eberron: virtudes, funções, numerais). */
+      'Warforged': { f: ['Cinza', 'Sino', 'Prisma', 'Sortudo', 'Nove', 'Valente'], m: ['Cinza', 'Sino', 'Prisma', 'Sortudo', 'Nove', 'Valente'] }
+      /* Tangata: não achei uma raça oficial de D&D/Pathfinder com esse nome — deve
+         ser algo do seu material de mesa. Deixei de fora até você me passar como
+         são os nomes lá (ou a fonte), pra não inventar errado. */
     };
     const EPITETO = ['das Águas Frias', 'o Silencioso', 'a Cicatriz', 'de Netéria', 'o Errante', 'das Sete Portas', 'o Sortudo', 'a Sombra Curta', 'do Vale Fundo', 'o Sem-Nome', null, null, null];
     const PROFISSAO = ['taverneiro(a)', 'mercador(a) de especiarias', 'guarda da cidade', 'ferreiro(a)', 'curandeiro(a)', 'batedor(a) de estrada', 'escrivão(ã)', 'contrabandista', 'caçador(a) de recompensas', 'sacerdote(isa) menor', 'artesão(ã)', 'cocheiro(a)', 'pescador(a)', 'espião(ã) amador(a)'];

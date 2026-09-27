@@ -14,15 +14,30 @@ não só o editor.
 |---|---|---|
 | 1 | **Contador de Palavras** (para a Sending e outros textos curtos) | Pronta |
 | 2 | **Bloco de Notas** com abas, ao estilo OneNote | Pronta |
-| 3 | **Tempo de Viagem** | Aguardando a regra de cálculo |
+| 3 | **Tempo de Viagem** | Pronta |
 | 4 | **Gerador de Tavernas** | Pronta |
 | 5 | **Preços de Serviços** | Aguardando a tabela de preços |
-| 6 | **Gerador de Nomes de NPC** | Pronta |
+| 6 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
 | 7 | **Buscar na Base do Mio da Feada** | Pronta |
 
-As ferramentas 3 e 5 já ocupam o lugar delas na grade, só mostrando "aguardando
-dados" até a regra/tabela ser definida — nada de reorganizar tudo quando elas
-ganharem lógica.
+A ferramenta 5 já ocupa o lugar dela na grade, só mostrando "aguardando dados"
+até a tabela de preços ser definida — nada de reorganizar tudo quando ela
+ganhar lógica.
+
+### Tempo de Viagem
+
+Tabela fixa de km/dia por meio de viagem (12 opções, de "A pé" a "Navio
+excelente") × ritmo (Lento/Normal/Rápido), fornecida pelo Danilo. `dias =
+distância ÷ km-por-dia`, arredondado para cima; mostra também quantos dias
+cheios e quantos km sobram no último dia.
+
+### Gerador de NPCs
+
+8 raças originais + **Meio-Orc** e **Warforged**. Não achei uma raça de
+D&D/Pathfinder chamada **Tangata** nem sub-raças oficiais para essas três, então
+deixei de fora por enquanto — para não inventar nomes que destoem do que você já
+usa em Netéria. Warforged usa o mesmo grupo de nomes para os dois gêneros
+(não tem gênero biológico).
 
 ## A grade de cards
 
