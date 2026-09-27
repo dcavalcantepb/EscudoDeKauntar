@@ -1,6 +1,6 @@
 # Escudo de Kauntar
 
-Painel pessoal do Mestre para as Lendas de Netéria: sete ferramentas rápidas
+Painel pessoal do Mestre para as Lendas de Netéria: nove ferramentas rápidas
 numa grade de cards, cada uma no tamanho que você quiser, arrastáveis para
 qualquer ordem. Site estático (HTML + CSS + JS puro, sem build), hospedado no
 GitHub Pages, com a mesma identidade visual do
@@ -8,7 +8,7 @@ GitHub Pages, com a mesma identidade visual do
 contrário dele, **é um painel privado**: a página inteira fica atrás de login,
 não só o editor.
 
-## As sete ferramentas
+## As nove ferramentas
 
 | # | Ferramenta | Estado |
 |---|---|---|
@@ -16,13 +16,35 @@ não só o editor.
 | 2 | **Bloco de Notas** com abas, ao estilo OneNote | Pronta |
 | 3 | **Tempo de Viagem** | Pronta |
 | 4 | **Gerador de Tavernas** | Pronta |
-| 5 | **Preços de Serviços** | Aguardando a tabela de preços |
-| 6 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
-| 7 | **Buscar na Base do Mio da Feada** | Pronta |
+| 5 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
+| 6 | **Serviços** (inclui mágicos) | Aguardando a tabela de preços |
+| 7 | **Taverna** — hospedagem, comida, bebida | Aguardando a tabela de preços |
+| 8 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
+| 9 | **Buscar na Base do Mio da Feada** | Pronta |
 
-A ferramenta 5 já ocupa o lugar dela na grade, só mostrando "aguardando dados"
-até a tabela de preços ser definida — nada de reorganizar tudo quando ela
-ganhar lógica.
+Preços de itens/serviços viraram **três cards separados** por pedido do Danilo
+(Equipamentos ≠ Serviços ≠ Taverna). Os dois que ainda não têm dados já ocupam
+o lugar deles na grade, só mostrando "aguardando" — nada de reorganizar tudo
+quando ganharem a tabela.
+
+### Equipamentos
+
+225 itens (armas, armaduras, montarias, ferramentas, instrumentos, arreios,
+barda…), com três faixas de preço — **Normal/Baixo/Alto** — cada item. Vem da
+lista de equipamento de aventureiro que o Danilo passou (em libras/gp-sp-cp);
+traduzi os nomes pro português (mantive em inglês só os poucos instrumentos que
+não são do time padrão do PHB, tipo "Glaur" e "Wargong" — não são nomes reais
+com tradução conhecida) e **converti o peso pra quilos**. Busca com filtro por
+categoria, igual à ferramenta 9.
+
+### Serviços e Taverna
+
+Ainda esperando os dados. "Serviços" cobre tanto o mundano (curandeiro, hospedar
+um cavalo) quanto o mágico (identificar, remover maldição). "Taverna" viria do
+mesmo site de Equipamentos, mas a página específica de taverna
+(thievesguild.cc/shops/shop-inntavern) está atrás de uma proteção anti-robô da
+Cloudflare que bloqueia leitura automática — precisa ser colada à mão, como a
+tabela de Tempo de Viagem.
 
 ### Tempo de Viagem
 
