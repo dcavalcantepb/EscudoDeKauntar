@@ -75,6 +75,14 @@ usa em Netéria. Warforged usa o mesmo grupo de nomes para os dois gêneros
   aparelhos, já que o uso é majoritariamente num computador só.
 - Focado em computador: a grade ainda funciona numa tela estreita, mas não foi
   desenhada pensando nela primeiro (ao contrário do Mio da Feada).
+- A posição segue **estritamente a ordem em que você arrasta** (`grid-auto-flow:
+  row`, sem `dense`) — o navegador não reorganiza os cards sozinho pra fechar
+  buracos. Pode sobrar espaço vazio às vezes; é o preço de a posição ser
+  previsível.
+- **"+ Espaço vazio"**, acima da grade, cria uma célula em branco (arrastável e
+  redimensionável como qualquer card, com um × pra remover) — pra separar
+  grupos de cards ou só abrir um respiro. Não é uma ferramenta: só existe
+  layout salvo se você a criar.
 
 ## Bloco de Notas
 

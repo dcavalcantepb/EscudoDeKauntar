@@ -42,17 +42,22 @@ const Grid = (function(){
   function currentOrder(){ return [...container.children].map(c => c.dataset.tool); }
   function persist(){ const order = currentOrder(); saveLocal(order); saveCloud(order); }
 
+  const isSpacer = id => typeof id === 'string' && id.startsWith('spacer:');
+
   /* junta o que foi salvo com a lista de ferramentas atual: uma ferramenta nova
      (ainda não salva) entra no fim, com o tamanho padrão dela; uma salva que não
-     existe mais é ignorada. */
+     existe mais é ignorada. Os "espaços vazios" (spacer:*) não vêm do código —
+     só existem se estiverem salvos —, então são mantidos tal como estão. */
   function reconcile(saved){
     const known = new Set(defs.map(d => d.id));
-    const order = (saved || []).map(e => e.id).filter(id => known.has(id));
+    const order = (saved || []).map(e => e.id).filter(id => known.has(id) || isSpacer(id));
     for(const d of defs) if(!order.includes(d.id)) order.push(d.id);
-    entries = new Map(defs.map(d => {
+    entries = new Map();
+    for(const d of defs){
       const found = (saved || []).find(e => e.id === d.id);
-      return [d.id, found ? { w: found.w, h: found.h } : defaultEntry(d)];
-    }));
+      entries.set(d.id, found ? { w: found.w, h: found.h } : defaultEntry(d));
+    }
+    for(const e of (saved || [])) if(isSpacer(e.id)) entries.set(e.id, { w: e.w, h: e.h, spacer: true });
     return order;
   }
 
@@ -60,23 +65,38 @@ const Grid = (function(){
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v6h6M20 10V4h-6M20 4 13 11M4 20l7-7"/></svg>';
   }
 
-  function buildCard(def){
-    const entry = entries.get(def.id);
+  function svgRemove(){
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  }
+
+  /* def é undefined pra um "espaço vazio" (spacer:*) — não é uma ferramenta,
+     é só uma célula reservada em branco, pra você separar grupos de cards. */
+  function buildCard(id, def){
+    const entry = entries.get(id);
     const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.tool = def.id;
+    card.className = def ? 'card' : 'card card--spacer';
+    card.dataset.tool = id;
     card.style.gridColumn = `span ${entry.w}`;
     card.style.gridRow = `span ${entry.h}`;
 
     const head = document.createElement('div');
     head.className = 'card__head';
     head.draggable = true;
-    head.innerHTML = `<span class="card__icon">${def.icon}</span><span class="card__title">${def.title}</span>`;
+    head.innerHTML = def
+      ? `<span class="card__icon">${def.icon}</span><span class="card__title">${def.title}</span>`
+      : `<span class="card__title muted">Espaço vazio</span>`;
     const sizeBtn = document.createElement('button');
     sizeBtn.type = 'button'; sizeBtn.className = 'size-btn'; sizeBtn.title = 'Tamanho do card';
     sizeBtn.setAttribute('aria-haspopup', 'true'); sizeBtn.setAttribute('aria-expanded', 'false');
     sizeBtn.innerHTML = svgResize();
     head.appendChild(sizeBtn);
+    if(!def){
+      const rmBtn = document.createElement('button');
+      rmBtn.type = 'button'; rmBtn.className = 'size-btn'; rmBtn.title = 'Remover este espaço vazio';
+      rmBtn.innerHTML = svgRemove();
+      rmBtn.addEventListener('click', e => { e.stopPropagation(); card.remove(); entries.delete(id); persist(); });
+      head.appendChild(rmBtn);
+    }
 
     const body = document.createElement('div');
     body.className = 'card__body';
@@ -84,7 +104,7 @@ const Grid = (function(){
     card.append(head, body);
     wireDrag(card, head);
     wireResize(card, sizeBtn, entry);
-    def.mount(body);
+    if(def) def.mount(body);
     return card;
   }
 
@@ -172,7 +192,16 @@ const Grid = (function(){
       const order = reconcile(cloud || loadLocal());
       saveLocal(order);
       container.innerHTML = '';
-      for(const id of order) container.appendChild(buildCard(defs.find(d => d.id === id)));
+      for(const id of order) container.appendChild(buildCard(id, defs.find(d => d.id === id)));
+    },
+    /* acrescenta um espaço vazio 1x1 no fim da grade — pra separar grupos de
+       cards, ou só deixar um respiro. Arraste e redimensione como qualquer
+       card; o × no cabeçalho remove. */
+    addSpacer(){
+      const id = `spacer:${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      entries.set(id, { w: 1, h: 1, spacer: true });
+      container.appendChild(buildCard(id, null));
+      persist();
     }
   };
 })();

@@ -111,7 +111,18 @@ a{ color:var(--violet); }
 @media (max-width:480px){ .masthead{ flex-direction:column; gap:.5rem; } .masthead__wordmark{ align-items:center; } }
 
 main.painel{ margin:0 auto; padding:.5rem 1.5rem 4rem; }
-.painel__hint{ margin:0 0 1.2rem; text-align:center; font-size:.92rem; color:var(--ink-soft); }
+.painel__hint{
+  margin:0 0 1.2rem; display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:.5rem .8rem; text-align:center; font-size:.92rem; color:var(--ink-soft);
+}
+
+/* ============ espaço vazio (spacer) ============ */
+.card--spacer{
+  background:repeating-linear-gradient(45deg, transparent 0 10px, var(--rule) 10px 11px);
+  box-shadow:none; border-style:dashed;
+}
+.card--spacer .card__head{ border-bottom-style:dashed; }
+.card--spacer .card__title{ font-style:italic; font-weight:400; }
 footer.foot{
   padding:1.4rem 1rem 1.8rem; text-align:center; color:var(--ink-soft);
   font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
