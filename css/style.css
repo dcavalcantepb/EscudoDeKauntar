@@ -157,19 +157,18 @@ footer.foot{
 
 /* ============ grade de cards ============ */
 /* auto-fit (não auto-fill) + minmax(_,1fr): as colunas que existem esticam para
-   preencher a largura toda, em vez de sobrar uma faixa vazia à direita quando a
-   janela não é múltiplo exato de --cell.
-   Sem "dense": com "dense" ligado, o navegador reordena os cards sozinho pra
-   fechar qualquer buraco, então um card podia não ficar onde você arrastou —
-   a ordem visual segue estritamente a ordem no DOM (a mesma que o arrastar
-   controla), mesmo que isso deixe um espaço vazio de vez em quando. */
+   preencher a largura toda.
+   Posição LIVRE: cada card fica numa célula (x,y) explícita que você escolhe
+   arrastando — por isso as colunas são um número FIXO (COLS, em js/grid.js),
+   não "quantas couberem": senão a coluna 5 de hoje deixaria de existir numa
+   janela menor amanhã, e um card salvo ali sumiria da vista. */
+main.painel{ overflow-x:auto; }
 .grid{
   display:grid; gap:1.1rem; align-items:stretch;
-  grid-template-columns:repeat(auto-fit, minmax(var(--cell), 1fr));
+  grid-template-columns:repeat(6, minmax(10rem, 1fr));
   grid-auto-rows:var(--cell-h);
-  grid-auto-flow:row;
+  position:relative;
 }
-@media (max-width:560px){ .grid{ grid-template-columns:1fr; } .card{ grid-column:span 1 !important; } }
 
 .card{
   display:flex; flex-direction:column; min-width:0; min-height:0; overflow:hidden;
@@ -177,7 +176,13 @@ footer.foot{
   box-shadow:0 4px 16px var(--shadow); transition:box-shadow .15s, border-color .15s;
 }
 .card.is-dragging{ opacity:.4; }
-.card.is-dragover{ border-color:var(--violet); box-shadow:0 0 0 2px var(--violet); }
+
+/* prévia de onde o card vai cair (segue a célula embaixo do cursor, ao vivo) */
+.card-ghost{
+  pointer-events:none; z-index:5; border-radius:16px;
+  border:2px dashed var(--violet); background:color-mix(in srgb, var(--violet) 16%, transparent);
+}
+.card-ghost.is-invalid{ border-color:var(--danger); background:color-mix(in srgb, var(--danger) 14%, transparent); }
 .card__head{
   display:flex; align-items:center; gap:.5rem; padding:.6rem .8rem; border-bottom:1px solid var(--rule);
   cursor:grab; user-select:none; flex:none;
@@ -204,6 +209,8 @@ footer.foot{
 .size-pop__grid{ display:grid; grid-template-columns:repeat(4, 1.35rem); grid-template-rows:repeat(3, 1.35rem); gap:.28rem; }
 .size-pop__cell{ width:1.35rem; height:1.35rem; border-radius:4px; background:var(--void-3); border:1px solid var(--rule); }
 .size-pop__cell.is-on{ background:var(--violet); border-color:var(--violet); }
+.size-pop__cell.is-invalid{ background:repeating-linear-gradient(45deg, var(--void-3) 0 3px, var(--rule) 3px 4px); cursor:not-allowed; }
+.size-pop__cell.is-invalid.is-on{ background:repeating-linear-gradient(45deg, var(--danger) 0 3px, color-mix(in srgb, var(--danger) 60%, black) 3px 4px); border-color:var(--danger); }
 .size-pop__label{ font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); }
 
 /* ============ ferramenta: contador de palavras ============ */

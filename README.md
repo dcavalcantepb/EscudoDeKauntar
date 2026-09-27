@@ -17,15 +17,13 @@ não só o editor.
 | 3 | **Tempo de Viagem** | Pronta |
 | 4 | **Gerador de Tavernas** | Pronta |
 | 5 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
-| 6 | **Serviços** (inclui mágicos) | Aguardando a tabela de preços |
-| 7 | **Taverna** — hospedagem, comida, bebida | Aguardando a tabela de preços |
+| 6 | **Serviços** (inclui mágicos) | Pronta (valores oficiais PHB/SRD) |
+| 7 | **Taverna** — hospedagem, comida, bebida | Pronta (valores oficiais PHB/SRD) |
 | 8 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
 | 9 | **Buscar na Base do Mio da Feada** | Pronta |
 
 Preços de itens/serviços viraram **três cards separados** por pedido do Danilo
-(Equipamentos ≠ Serviços ≠ Taverna). Os dois que ainda não têm dados já ocupam
-o lugar deles na grade, só mostrando "aguardando" — nada de reorganizar tudo
-quando ganharem a tabela.
+(Equipamentos ≠ Serviços ≠ Taverna).
 
 ### Equipamentos
 
@@ -39,12 +37,26 @@ categoria, igual à ferramenta 9.
 
 ### Serviços e Taverna
 
-Ainda esperando os dados. "Serviços" cobre tanto o mundano (curandeiro, hospedar
-um cavalo) quanto o mágico (identificar, remover maldição). "Taverna" viria do
-mesmo site de Equipamentos, mas a página específica de taverna
+A página específica de taverna do site de Equipamentos
 (thievesguild.cc/shops/shop-inntavern) está atrás de uma proteção anti-robô da
-Cloudflare que bloqueia leitura automática — precisa ser colada à mão, como a
-tabela de Tempo de Viagem.
+Cloudflare que bloqueia leitura automática, então por pedido do Danilo ("pode
+utilizar os valores oficiais") os dois cards usam a referência **PHB/SRD 5e**
+em vez de esperar por uma tabela colada à mão:
+
+- **Taverna**: a tabela oficial "Food, Drink, and Lodging" — hospedagem e
+  refeição por dia em 6 níveis (Miserável → Aristocrática), mais itens comuns
+  (cerveja, pão, banquete…). Sem busca — são só 20 linhas, cabe tudo numa
+  lista fixa por categoria.
+- **Serviços**: o mundano (contratados — sem treinamento/especializado, tabela
+  do DMG) e o mágico. Conjuração **não tem preço fixo por magia** na regra
+  oficial: o PHB usa uma fórmula por nível do espaço, **10 po × nível²** (é
+  assim que o próprio livro chega nos ~20 exemplos que lista). Preferi
+  implementar a fórmula a copiar só os exemplos do livro: cobre qualquer magia
+  que pedirem, não só as que o PHB escolheu ilustrar. Exceção conhecida:
+  Identificar custa 20 po (o dobro, por causa do componente de pérola) — fica
+  anotada no card. Confiança alta na fórmula e na tabela de Taverna (valores
+  centrais do PHB); confiança moderada nos salários de contratados do DMG
+  (tabela menos citada, vale conferir se for usar em mesa).
 
 ### Tempo de Viagem
 
@@ -66,23 +78,36 @@ usa em Netéria. Warforged usa o mesmo grupo de nomes para os dois gêneros
 
 ## A grade de cards
 
-- **Arraste o cabeçalho** de um card para reordenar.
+Posição **livre de verdade**: cada card mora numa célula `(x, y)` — coluna e
+linha — escolhida por você ao arrastar, igual ladrilhos do Windows. Não existe
+"ordem" nenhuma por trás: dois cards podem ficar longe um do outro, com buracos
+de sobra no meio, e cada um guarda a própria posição (não a posição de quem
+veio antes dele). Foi uma correção explícita de rumo — a primeira versão só
+deixava reordenar sequencialmente (com ou sem `grid-auto-flow: dense`), e não
+era isso que o Danilo queria.
+
+- **Arraste o cabeçalho** de um card para qualquer célula livre da grade — a
+  prévia (contorno tracejado) fica roxa numa célula livre e vermelha se
+  sobrepor outro card; soltar em cima de uma célula ocupada não faz nada.
 - O **ícone de canto** (↔) abre uma gradinha, no estilo "inserir tabela" do
   Word: clique numa célula para escolher quantas colunas × linhas o card ocupa
-  (até 4×3).
+  (até 4×3). Combinações que sobreporiam um vizinho aparecem desabilitadas —
+  o redimensionamento respeita a mesma regra de não-sobreposição do arrastar.
+- A grade tem sempre **6 colunas fixas**, esticadas pra usar a largura toda da
+  tela — por isso não é "responsiva" no número de colunas (o alvo é
+  computador); isso também mantém as posições `(x, y)` salvas válidas
+  independente do tamanho da janela.
 - A disposição é salva sozinha, no navegador (`localStorage`) e, como reforço,
   também no Supabase (tabela `escudo_layout`) — sem pressa de sincronizar entre
   aparelhos, já que o uso é majoritariamente num computador só.
 - Focado em computador: a grade ainda funciona numa tela estreita, mas não foi
-  desenhada pensando nela primeiro (ao contrário do Mio da Feada).
-- A posição segue **estritamente a ordem em que você arrasta** (`grid-auto-flow:
-  row`, sem `dense`) — o navegador não reorganiza os cards sozinho pra fechar
-  buracos. Pode sobrar espaço vazio às vezes; é o preço de a posição ser
-  previsível.
+  desenhada pensando nela primeiro (ao contrário do Mio da Feada). Nota: a
+  reescrita pra posição livre derrubou, como efeito colateral (não uma decisão
+  deliberada), o ajuste específico que existia pra telas muito estreitas
+  (abaixo de 560px) — não chegou a ser reavaliado ainda.
 - **"+ Espaço vazio"**, acima da grade, cria uma célula em branco (arrastável e
-  redimensionável como qualquer card, com um × pra remover) — pra separar
-  grupos de cards ou só abrir um respiro. Não é uma ferramenta: só existe
-  layout salvo se você a criar.
+  redimensionável como qualquer card, com um × pra remover) — cai numa vaga
+  livre automaticamente. Não é uma ferramenta: só existe se você a criar.
 
 ## Bloco de Notas
 
