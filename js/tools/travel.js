@@ -1,5 +1,8 @@
 /* 3) Calculadora de Tempo de Viagem — tabela de km/dia por meio de viagem e
-   ritmo (fornecida pelo Danilo). dias = distância ÷ km-por-dia. */
+   ritmo (fornecida pelo Danilo). dias = distância ÷ km-por-dia; a fração de
+   dia vira hora assumindo HORAS_POR_DIA de viagem (padrão de D&D: 8h/dia —
+   a tabela só dá km por DIA, então não tem como descobrir esse número só
+   olhando ela; se a mesa usa outra duração, troque a constante abaixo). */
 TOOLS.push({
   id: 'travel',
   title: 'Tempo de Viagem',
@@ -21,6 +24,7 @@ TOOLS.push({
       'Navio excelente':     { lento: 80, normal: 100, rapido: 120 }
     };
     const meios = Object.keys(TABELA);
+    const HORAS_POR_DIA = 8;
 
     el.innerHTML = `
       <div class="notes__foot" style="flex-wrap:wrap">
@@ -47,13 +51,16 @@ TOOLS.push({
         return;
       }
       const kmDia = TABELA[fMeio.value][fRitmo.value];
-      const dias = distancia / kmDia;
-      const diasInteiros = Math.floor(dias);
-      const kmUltimoDia = Math.round((dias - diasInteiros) * kmDia);
+      const horasTotais = (distancia / kmDia) * HORAS_POR_DIA;
+      let dias = Math.floor(horasTotais / HORAS_POR_DIA);
+      let horas = Math.round(horasTotais - dias * HORAS_POR_DIA);
+      if(horas >= HORAS_POR_DIA){ horas -= HORAS_POR_DIA; dias += 1; }   // o arredondamento pode empurrar pra hora cheia do dia seguinte
+      const partes = [];
+      if(dias) partes.push(`${dias} ${dias === 1 ? 'dia' : 'dias'}`);
+      if(horas || !dias) partes.push(`${horas} ${horas === 1 ? 'hora' : 'horas'}`);
       result.innerHTML = `
-        <p class="gen__name">${Math.ceil(dias)} ${Math.ceil(dias) === 1 ? 'dia' : 'dias'} de viagem</p>
-        <p class="gen__line"><b>${kmDia} km/dia</b> nesse ritmo</p>
-        <p class="gen__line">${diasInteiros} ${diasInteiros === 1 ? 'dia cheio' : 'dias cheios'}${kmUltimoDia ? ` + ${kmUltimoDia} km no último dia` : ''}</p>`;
+        <p class="gen__name">${partes.join(' e ')} de viagem</p>
+        <p class="gen__line"><b>${kmDia} km/dia</b> nesse ritmo · ${HORAS_POR_DIA}h de viagem por dia</p>`;
     }
     [fMeio, fRitmo, fDist].forEach(f => f.addEventListener('input', calcular));
     calcular();

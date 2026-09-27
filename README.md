@@ -49,9 +49,12 @@ tabela de Tempo de Viagem.
 ### Tempo de Viagem
 
 Tabela fixa de km/dia por meio de viagem (12 opções, de "A pé" a "Navio
-excelente") × ritmo (Lento/Normal/Rápido), fornecida pelo Danilo. `dias =
-distância ÷ km-por-dia`, arredondado para cima; mostra também quantos dias
-cheios e quantos km sobram no último dia.
+excelente") × ritmo (Lento/Normal/Rápido), fornecida pelo Danilo. Resultado em
+**dias e horas** (para de mostrar minutos): `dias = distância ÷ km-por-dia`, e a
+fração do dia vira hora assumindo **8h de viagem por dia** — o padrão de D&D.
+A tabela só dá km por *dia*, então essa duração não dá pra descobrir só olhando
+os números; se a mesa usa outra, é a constante `HORAS_POR_DIA` no topo de
+`js/tools/travel.js`.
 
 ### Gerador de NPCs
 
