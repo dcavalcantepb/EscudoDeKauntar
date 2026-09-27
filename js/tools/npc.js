@@ -6,23 +6,7 @@ TOOLS.push({
   icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
   defaultW: 1, defaultH: 1,
   mount(el){
-    const RACAS = {
-      'Humano': { f: ['Ilda', 'Mira', 'Selena', 'Branca', 'Teodora', 'Alix'], m: ['Bram', 'Teodo', 'Ossian', 'Renar', 'Ualdo', 'Corvin'] },
-      'Elfo': { f: ['Ythiel', 'Sael', 'Nimlath', 'Ilyra', 'Vaelis', 'Aerin'], m: ['Thaelor', 'Ithran', 'Vaelis', 'Sylan', 'Ordhan', 'Faelin'] },
-      'Anão': { f: ['Brynhild', 'Dagna', 'Torvi', 'Helga', 'Runa', 'Gerda'], m: ['Thorik', 'Balgrim', 'Durnan', 'Orsik', 'Kazgar', 'Brondar'] },
-      'Halfling': { f: ['Rosa', 'Mel', 'Tansy', 'Nola', 'Bree', 'Lila'], m: ['Toby', 'Pip', 'Mero', 'Wilbo', 'Finn', 'Otho'] },
-      'Meio-Elfo': { f: ['Selanwe', 'Dara', 'Ilyanna', 'Marel', 'Yvaine', 'Sorel'], m: ['Aramel', 'Doran', 'Kestrel', 'Ivarel', 'Sael', 'Bren'] },
-      'Orc': { f: ['Ghorza', 'Uluka', 'Nagra', 'Zasha', 'Mogra', 'Vurka'], m: ['Gorrath', 'Uzgul', 'Thokk', 'Vraggar', 'Mogul', 'Kazdak'] },
-      'Draconato': { f: ['Sthara', 'Ixara', 'Mishaka', 'Perascis', 'Thava', 'Nala'], m: ['Balasar', 'Kriv', 'Rhogar', 'Torinn', 'Shamash', 'Vrondir'] },
-      'Tiefling': { f: ['Akta', 'Damaia', 'Ligeia', 'Orianna', 'Sairche', 'Zariel'], m: ['Akmenos', 'Barrakas', 'Ekemon', 'Iados', 'Mordai', 'Rakis'] },
-      'Meio-Orc': { f: ['Baggi', 'Emen', 'Kansif', 'Myev', 'Neega', 'Vola'], m: ['Dench', 'Feng', 'Holg', 'Krusk', 'Ront', 'Thokk'] },
-      /* Sem gênero biológico — o mesmo grupo de nomes serve pra "f" e "m" (nomes
-         curtos e evocativos, ao gosto do Eberron: virtudes, funções, numerais). */
-      'Warforged': { f: ['Cinza', 'Sino', 'Prisma', 'Sortudo', 'Nove', 'Valente'], m: ['Cinza', 'Sino', 'Prisma', 'Sortudo', 'Nove', 'Valente'] }
-      /* Tangata: não achei uma raça oficial de D&D/Pathfinder com esse nome — deve
-         ser algo do seu material de mesa. Deixei de fora até você me passar como
-         são os nomes lá (ou a fonte), pra não inventar errado. */
-    };
+    const RACAS = RACAS_NOMES;
     const EPITETO = ['das Águas Frias', 'o Silencioso', 'a Cicatriz', 'de Netéria', 'o Errante', 'das Sete Portas', 'o Sortudo', 'a Sombra Curta', 'do Vale Fundo', 'o Sem-Nome', null, null, null];
     const PROFISSAO = ['taverneiro(a)', 'mercador(a) de especiarias', 'guarda da cidade', 'ferreiro(a)', 'curandeiro(a)', 'batedor(a) de estrada', 'escrivão(ã)', 'contrabandista', 'caçador(a) de recompensas', 'sacerdote(isa) menor', 'artesão(ã)', 'cocheiro(a)', 'pescador(a)', 'espião(ã) amador(a)'];
     const TRACO = ['fala baixo demais e todos se inclinam para ouvir', 'nunca olha nos olhos de quem está mentindo', 'guarda moedas de todos os lugares que já visitou', 'tem medo de gatos, e não explica por quê', 'lembra o nome de todo mundo, uma vez só', 'está sempre mastigando alguma coisa', 'conta a mesma piada em toda conversa', 'desconfia de qualquer oferta boa demais', 'anota tudo num caderno surrado', 'trata estranhos com uma educação exagerada'];

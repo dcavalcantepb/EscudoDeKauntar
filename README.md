@@ -1,29 +1,30 @@
 # Escudo de Kauntar
 
-Painel pessoal do Mestre para as Lendas de Netéria: nove ferramentas rápidas
-numa grade de cards, cada uma no tamanho que você quiser, arrastáveis para
-qualquer ordem. Site estático (HTML + CSS + JS puro, sem build), hospedado no
+Painel pessoal do Mestre para as Lendas de Netéria: oito ferramentas rápidas
+numa grade de cards, cada uma no tamanho que você quiser, em qualquer posição
+livre da grade. Site estático (HTML + CSS + JS puro, sem build), hospedado no
 GitHub Pages, com a mesma identidade visual do
 [Mio da Feada](https://github.com/dcavalcantepb/mio_Da_Feada) — mas, ao
 contrário dele, **é um painel privado**: a página inteira fica atrás de login,
 não só o editor.
 
-## As nove ferramentas
+## As oito ferramentas
 
 | # | Ferramenta | Estado |
 |---|---|---|
 | 1 | **Contador de Palavras** (para a Sending e outros textos curtos) | Pronta |
 | 2 | **Bloco de Notas** com abas, ao estilo OneNote | Pronta |
 | 3 | **Tempo de Viagem** | Pronta |
-| 4 | **Gerador de Tavernas** | Pronta |
-| 5 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
-| 6 | **Serviços** (inclui mágicos) | Pronta (valores oficiais PHB/SRD) |
-| 7 | **Taverna** — hospedagem, comida, bebida | Pronta (valores oficiais PHB/SRD) |
-| 8 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
-| 9 | **Buscar na Base do Mio da Feada** | Pronta |
+| 4 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
+| 5 | **Serviços** (inclui mágicos) — busca de preços + conjuração | Pronta |
+| 6 | **Taverna** — gera taverna, cardápio, taverneiro(a) e ajudantes | Pronta |
+| 7 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
+| 8 | **Buscar na Base do Mio da Feada** | Pronta |
 
-Preços de itens/serviços viraram **três cards separados** por pedido do Danilo
-(Equipamentos ≠ Serviços ≠ Taverna).
+Preços de itens/serviços viraram **cards separados** por pedido do Danilo
+(Equipamentos ≠ Serviços ≠ Taverna). O antigo "Gerador de Tavernas" (uma
+ferramenta própria) foi fundido dentro do card Taverna — não faziam sentido
+como dois cards separados, um só de nome e outro só de preço.
 
 ### Equipamentos
 
@@ -33,30 +34,40 @@ lista de equipamento de aventureiro que o Danilo passou (em libras/gp-sp-cp);
 traduzi os nomes pro português (mantive em inglês só os poucos instrumentos que
 não são do time padrão do PHB, tipo "Glaur" e "Wargong" — não são nomes reais
 com tradução conhecida) e **converti o peso pra quilos**. Busca com filtro por
-categoria, igual à ferramenta 9.
+categoria, igual ao card Buscar na Base do Mio da Feada.
 
-### Serviços e Taverna
+### Serviços
 
-A página específica de taverna do site de Equipamentos
-(thievesguild.cc/shops/shop-inntavern) está atrás de uma proteção anti-robô da
-Cloudflare que bloqueia leitura automática, então por pedido do Danilo ("pode
-utilizar os valores oficiais") os dois cards usam a referência **PHB/SRD 5e**
-em vez de esperar por uma tabela colada à mão:
+Busca com filtro por categoria, igual a Equipamentos — referência que o Danilo
+passou (Carruagem entre/dentro de cidades, Passagem de Navio, Pedágio,
+Contratado Especializado/Sem Treinamento, Mensageiro), convertida pra po/pp/pc.
+Acima da lista, um calculador separado pra conjuração: a regra oficial **não
+tem preço fixo por magia**, e sim uma fórmula por nível do espaço usado,
+**10 po × nível²** (é assim que o próprio PHB chega nos ~20 exemplos que
+lista). Preferi a fórmula a copiar só os exemplos do livro: cobre qualquer
+magia que pedirem, não só as que o PHB escolheu ilustrar. Exceção conhecida:
+Identificar custa 20 po (o dobro, por causa do componente de pérola) — fica
+anotada no card.
 
-- **Taverna**: a tabela oficial "Food, Drink, and Lodging" — hospedagem e
-  refeição por dia em 6 níveis (Miserável → Aristocrática), mais itens comuns
-  (cerveja, pão, banquete…). Sem busca — são só 20 linhas, cabe tudo numa
-  lista fixa por categoria.
-- **Serviços**: o mundano (contratados — sem treinamento/especializado, tabela
-  do DMG) e o mágico. Conjuração **não tem preço fixo por magia** na regra
-  oficial: o PHB usa uma fórmula por nível do espaço, **10 po × nível²** (é
-  assim que o próprio livro chega nos ~20 exemplos que lista). Preferi
-  implementar a fórmula a copiar só os exemplos do livro: cobre qualquer magia
-  que pedirem, não só as que o PHB escolheu ilustrar. Exceção conhecida:
-  Identificar custa 20 po (o dobro, por causa do componente de pérola) — fica
-  anotada no card. Confiança alta na fórmula e na tabela de Taverna (valores
-  centrais do PHB); confiança moderada nos salários de contratados do DMG
-  (tabela menos citada, vale conferir se for usar em mesa).
+### Taverna
+
+Um gerador completo — fundiu o antigo "Gerador de Tavernas" pra dentro deste
+card, por pedido do Danilo. Cabeçalho com 6 seletores (tipo de hospedagem,
+especialidade da cozinha, número de ajudantes, raça/sexo/humor do
+taverneiro(a); tudo com opção "aleatório"); ao clicar em **Gerar**, o card
+mostra nome da taverna, uma descrição breve (sem rumores — o Danilo cria os
+dele), o taverneiro(a) e os ajudantes (raça/nome sorteados da mesma tabela do
+Gerador de NPCs — ver `js/data/races.js`), e dois cardápios com preço:
+**pratos** (10 especialidades de cozinha à escolha, de Alta Cozinha a Comida
+Exótica) e **bebidas** (uma lista só, não varia por especialidade). O tipo de
+hospedagem controla quantos itens o cardápio tem — de 1 (Miserável) a 5
+(Rica/Aristocrática).
+
+Preço de prato/bebida **não é um número oficial**: o PHB só lista o preço de
+"uma refeição por dia" por nível de hospedagem (tabela "Food, Drink, and
+Lodging"), não o de um prato avulso — uso esse valor oficial como base e vario
+um pouco por item, pra dar alguma diversidade de preço dentro do mesmo
+cardápio. Se isso não for o que você queria, me avisa que ajusto a régua.
 
 ### Tempo de Viagem
 
@@ -105,9 +116,11 @@ era isso que o Danilo queria.
   reescrita pra posição livre derrubou, como efeito colateral (não uma decisão
   deliberada), o ajuste específico que existia pra telas muito estreitas
   (abaixo de 560px) — não chegou a ser reavaliado ainda.
-- **"+ Espaço vazio"**, acima da grade, cria uma célula em branco (arrastável e
-  redimensionável como qualquer card, com um × pra remover) — cai numa vaga
-  livre automaticamente. Não é uma ferramenta: só existe se você a criar.
+
+(A ideia de um "+ Espaço vazio" — um card em branco só pra abrir respiro —
+existiu numa versão anterior e foi removida: com posição livre de verdade,
+deixar uma célula vazia já é natural, não precisa de um card fantasma pra
+isso.)
 
 ## Bloco de Notas
 
@@ -161,6 +174,7 @@ js/supabase-client.js      conexão (mesmo projeto do Mio da Feada)
 js/theme.js                tema claro/escuro (mesma chave localStorage do Mio da Feada)
 js/richtext.js             escapeHtml, renderMarkdownLite e a barra de texto (trimmed do Mio da Feada)
 js/grid.js                 a grade de cards: arrastar, redimensionar, salvar a disposição
+js/data/races.js            nomes por raça/gênero — compartilhado entre NPCs e o gerador de Taverna
 js/app.js                  login e bootstrap do painel
 js/tools/*.js               uma ferramenta por arquivo (cada uma faz TOOLS.push({...}))
 favicon.ico, img/favicon-32.png, img/apple-touch-icon.png, img/mascot.png
