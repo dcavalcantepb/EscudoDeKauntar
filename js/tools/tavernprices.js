@@ -15,13 +15,15 @@ TOOLS.push({
   icon: '<svg viewBox="0 0 24 24"><path d="M6 8h9v10a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z"/><path d="M15 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/></svg>',
   defaultW: 2, defaultH: 3,
   mount(el){
+    /* hospedagem: preço OFICIAL (PHB/SRD, tabela "Food, Drink, and Lodging",
+       "por dia") — diferente de prato/bebida, que são minha extrapolação. */
     const TIERS = {
-      'Miserável':     { pratos: 1, prato: [2, 'pc'], bebida: [1, 'pc'] },
-      'Pobre':         { pratos: 2, prato: [4, 'pc'], bebida: [2, 'pc'] },
-      'Modesta':       { pratos: 3, prato: [2, 'pp'], bebida: [4, 'pc'] },
-      'Confortável':   { pratos: 4, prato: [3, 'pp'], bebida: [1, 'pp'] },
-      'Rica':          { pratos: 5, prato: [5, 'pp'], bebida: [2, 'pp'] },
-      'Aristocrática': { pratos: 5, prato: [1, 'po'], bebida: [4, 'pp'] }
+      'Miserável':     { pratos: 1, hospedagem: '7 pc', prato: [2, 'pc'], bebida: [1, 'pc'] },
+      'Pobre':         { pratos: 2, hospedagem: '1 pp', prato: [4, 'pc'], bebida: [2, 'pc'] },
+      'Modesta':       { pratos: 3, hospedagem: '5 pp', prato: [2, 'pp'], bebida: [4, 'pc'] },
+      'Confortável':   { pratos: 4, hospedagem: '8 pp', prato: [3, 'pp'], bebida: [1, 'pp'] },
+      'Rica':          { pratos: 5, hospedagem: '2 po', prato: [5, 'pp'], bebida: [2, 'pp'] },
+      'Aristocrática': { pratos: 5, hospedagem: '4 po', prato: [1, 'po'], bebida: [4, 'pp'] }
     };
     const tiers = Object.keys(TIERS);
 
@@ -202,9 +204,10 @@ TOOLS.push({
         </select>
       </div>
       <div class="gen__result"><p class="gen__empty">Clique em "Gerar" para sortear uma taverna.</p></div>
-      <div class="notes__foot">
+      <div class="notes__foot" style="flex-wrap:wrap">
         <button class="btn btn--primary btn--sm" data-act="gerar">Gerar</button>
         <button class="btn btn--sm" data-act="copiar">Copiar</button>
+        <button class="btn btn--sm" data-act="limpar">Limpar</button>
         <span class="notes__status"></span>
       </div>`;
     const fTier = el.querySelector('[data-f="tier"]');
@@ -250,6 +253,7 @@ TOOLS.push({
         <p class="gen__name">${escapeHtml(nome)}</p>
         <p class="gen__line">${escapeHtml(atm)}</p>
         <p class="gen__line"><b>Tipo:</b> ${tierNome} · <b>Cozinha:</b> ${espNome}</p>
+        <p class="gen__line"><b>Hospedagem (por dia):</b> <b class="c-ouro">${tier.hospedagem}</b></p>
         <p class="gen__line"><b>Taverneiro(a):</b> ${escapeHtml(taverneiro)} — ${racaTav} (${generoTav === 'f' ? 'fem.' : 'masc.'}), ${humor}</p>
         <p class="gen__line"><b>Ajudantes:</b> ${ajudantes.map(a => `${escapeHtml(a.nome)} (${a.raca}, ${a.papel})`).join(', ')}</p>
         <div class="existing__group" style="padding-left:0">Cardápio de pratos</div>
@@ -258,13 +262,21 @@ TOOLS.push({
         <div class="search__results" style="flex:none">${bebidas.map(b => itemLinha(b.nome, b.desc, b.preco)).join('')}</div>`;
 
       ultimoTexto = `${nome}\n${atm}\nTipo: ${tierNome} · Cozinha: ${espNome}\n`
+        + `Hospedagem (por dia): ${tier.hospedagem}\n`
         + `Taverneiro(a): ${taverneiro} — ${racaTav} (${generoTav === 'f' ? 'fem.' : 'masc.'}), ${humor}\n`
         + `Ajudantes: ${ajudantes.map(a => `${a.nome} (${a.raca}, ${a.papel})`).join(', ')}\n`
         + `Pratos:\n${pratos.map(p => `- ${p.nome} (${p.desc}) — ${p.preco}`).join('\n')}\n`
         + `Bebidas:\n${bebidas.map(b => `- ${b.nome} (${b.desc}) — ${b.preco}`).join('\n')}`;
       status.textContent = '';
     }
+    function limpar(){
+      result.innerHTML = '<p class="gen__empty">Clique em "Gerar" para sortear uma taverna.</p>';
+      fTier.value = ''; fEsp.value = ''; fAjud.value = ''; fRaca.value = ''; fGenero.value = ''; fHumor.value = '';
+      ultimoTexto = '';
+      status.textContent = '';
+    }
     el.querySelector('[data-act="gerar"]').addEventListener('click', gerar);
+    el.querySelector('[data-act="limpar"]').addEventListener('click', limpar);
     el.querySelector('[data-act="copiar"]').addEventListener('click', async () => {
       if(!ultimoTexto) return;
       try{ await navigator.clipboard.writeText(ultimoTexto); status.textContent = 'copiado!'; }

@@ -1,13 +1,8 @@
-/* Serviços (inclui mágicos) — valores oficiais (PHB/SRD 5e).
-   Lista de serviços mundanos no mesmo formato de busca/filtro do card
-   Equipamentos (referência que o Danilo passou: carruagem, contratado,
-   mensageiro, pedágio, passagem de navio — sem peso, por não serem itens
-   físicos). Conjuração continua em separado, ACIMA da lista: não é um preço
-   fixo por item, e sim uma fórmula por NÍVEL do espaço usado — 10 po × nível²
-   — que é como o próprio livro calcula a tabela de exemplos dele (Cura de
-   Ferimentos nível 1 = 10 po, Restauração Menor nível 2 = 40 po, e por aí vai).
-   Prefiro a fórmula a copiar só os ~20 exemplos do livro: cobre QUALQUER magia
-   que os jogadores pedirem, não só as que o PHB escolheu ilustrar. */
+/* Serviços — busca com filtro por categoria, igual ao card Equipamentos.
+   Referência que o Danilo passou (carruagem, contratado, mensageiro, pedágio,
+   passagem de navio), convertida pra po/pp/pc. Conjuração tem card próprio
+   (ver js/tools/spellcasting.js) — não é uma lista de preço fixo, então não
+   cabia nesse formato de busca. */
 const SERVICOS = [
   ["Transporte", "Carruagem entre Cidades", "3 pc", 3, "2 pc", "6 pc"],
   ["Transporte", "Carruagem dentro da Cidade", "1 pc", 1, "1 pc", "2 pc"],
@@ -21,24 +16,11 @@ const SERVICOS = [
 TOOLS.push({
   id: 'services',
   title: 'Serviços',
-  icon: '<svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>',
+  icon: '<svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>',
   defaultW: 2, defaultH: 2,
   mount(el){
     const categorias = [...new Set(SERVICOS.map(r => r[0]))];
     el.innerHTML = `
-      <div class="notes__foot" style="flex-wrap:wrap">
-        <label class="field" style="width:auto">Nível da magia
-          <select data-f="nivel">
-            ${[1,2,3,4,5,6,7,8,9].map(n => `<option value="${n}">${n}º</option>`).join('')}
-          </select>
-        </label>
-      </div>
-      <div class="gen__result" style="flex:none">
-        <p class="gen__line"><b class="c-ouro gen__custo" style="font-size:1.3rem"></b> para contratar um conjurador
-          (mínimo — sobe se a magia gastar um componente material caro)</p>
-        <p class="search__snip" style="margin:0">Exceção conhecida: Identificar custa 20 po (o dobro da fórmula, por causa
-          da pérola que o componente material pede).</p>
-      </div>
       <div class="search__box">
         <input class="field" type="search" placeholder="Buscar serviço…" autocomplete="off">
         <select class="field" style="width:auto" data-f="categoria">
@@ -47,12 +29,6 @@ TOOLS.push({
         </select>
       </div>
       <div class="search__results"></div>`;
-    const fNivel = el.querySelector('[data-f="nivel"]');
-    const custo = el.querySelector('.gen__custo');
-    function calcular(){ custo.textContent = `${10 * fNivel.value * fNivel.value} po`; }
-    fNivel.addEventListener('input', calcular);
-    calcular();
-
     const input = el.querySelector('input');
     const catSel = el.querySelector('[data-f="categoria"]');
     const results = el.querySelector('.search__results');

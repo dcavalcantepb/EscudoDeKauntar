@@ -25,17 +25,23 @@ TOOLS.push({
           <option value="f">Feminino</option>
           <option value="m">Masculino</option>
         </select>
+        <select class="field" style="width:auto" data-f="profissao">
+          <option value="">Profissão: aleatória</option>
+          ${PROFISSAO.map(p => `<option value="${p}">${p}</option>`).join('')}
+        </select>
       </div>
       <div class="gen__result"><p class="gen__empty">Clique em "Gerar" para sortear um NPC.</p></div>
-      <div class="notes__foot">
+      <div class="notes__foot" style="flex-wrap:wrap">
         <button class="btn btn--primary btn--sm" data-act="gerar">Gerar</button>
         <button class="btn btn--sm" data-act="copiar">Copiar</button>
+        <button class="btn btn--sm" data-act="limpar">Limpar</button>
         <span class="notes__status"></span>
       </div>`;
     const result = el.querySelector('.gen__result');
     const status = el.querySelector('.notes__status');
     const fRaca = el.querySelector('[data-f="raca"]');
     const fGenero = el.querySelector('[data-f="genero"]');
+    const fProf = el.querySelector('[data-f="profissao"]');
     let ultimoTexto = '';
 
     function gerar(){
@@ -44,7 +50,7 @@ TOOLS.push({
       const nome = pick(RACAS[raca][genero]);
       const epiteto = pick(EPITETO);
       const nomeCompleto = epiteto ? `${nome} ${epiteto}` : nome;
-      const prof = pick(PROFISSAO), traco = pick(TRACO);
+      const prof = fProf.value || pick(PROFISSAO), traco = pick(TRACO);
       result.innerHTML = `
         <p class="gen__name">${escapeHtml(nomeCompleto)}</p>
         <p class="gen__line"><b>Raça:</b> ${escapeHtml(raca)} (${genero === 'f' ? 'fem.' : 'masc.'})</p>
@@ -53,7 +59,14 @@ TOOLS.push({
       ultimoTexto = `${nomeCompleto} — ${raca}, ${prof}\n${traco}.`;
       status.textContent = '';
     }
+    function limpar(){
+      result.innerHTML = '<p class="gen__empty">Clique em "Gerar" para sortear um NPC.</p>';
+      fRaca.value = ''; fGenero.value = ''; fProf.value = '';
+      ultimoTexto = '';
+      status.textContent = '';
+    }
     el.querySelector('[data-act="gerar"]').addEventListener('click', gerar);
+    el.querySelector('[data-act="limpar"]').addEventListener('click', limpar);
     el.querySelector('[data-act="copiar"]').addEventListener('click', async () => {
       if(!ultimoTexto) return;
       try{ await navigator.clipboard.writeText(ultimoTexto); status.textContent = 'copiado!'; }

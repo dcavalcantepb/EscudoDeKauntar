@@ -1,6 +1,6 @@
 # Escudo de Kauntar
 
-Painel pessoal do Mestre para as Lendas de Netéria: oito ferramentas rápidas
+Painel pessoal do Mestre para as Lendas de Netéria: nove ferramentas rápidas
 numa grade de cards, cada uma no tamanho que você quiser, em qualquer posição
 livre da grade. Site estático (HTML + CSS + JS puro, sem build), hospedado no
 GitHub Pages, com a mesma identidade visual do
@@ -8,7 +8,7 @@ GitHub Pages, com a mesma identidade visual do
 contrário dele, **é um painel privado**: a página inteira fica atrás de login,
 não só o editor.
 
-## As oito ferramentas
+## As nove ferramentas
 
 | # | Ferramenta | Estado |
 |---|---|---|
@@ -16,15 +16,23 @@ não só o editor.
 | 2 | **Bloco de Notas** com abas, ao estilo OneNote | Pronta |
 | 3 | **Tempo de Viagem** | Pronta |
 | 4 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
-| 5 | **Serviços** (inclui mágicos) — busca de preços + conjuração | Pronta |
-| 6 | **Taverna** — gera taverna, cardápio, taverneiro(a) e ajudantes | Pronta |
-| 7 | **Gerador de NPCs** | Pronta (8 raças, +Meio-Orc e Warforged) |
-| 8 | **Buscar na Base do Mio da Feada** | Pronta |
+| 5 | **Serviços** — busca de preços (carruagem, contratado, mensageiro…) | Pronta |
+| 6 | **Conjuração** — quanto custa contratar um conjurador | Pronta |
+| 7 | **Taverna** — gera taverna, cardápio, taverneiro(a) e ajudantes | Pronta |
+| 8 | **Gerador de NPCs** | Pronta (9 raças, +Meio-Orc, Warforged e Tangata) |
+| 9 | **Buscar na Base do Mio da Feada** | Pronta |
 
 Preços de itens/serviços viraram **cards separados** por pedido do Danilo
-(Equipamentos ≠ Serviços ≠ Taverna). O antigo "Gerador de Tavernas" (uma
-ferramenta própria) foi fundido dentro do card Taverna — não faziam sentido
-como dois cards separados, um só de nome e outro só de preço.
+(Equipamentos ≠ Serviços ≠ Conjuração ≠ Taverna). O antigo "Gerador de
+Tavernas" (uma ferramenta própria) foi fundido dentro do card Taverna — não
+faziam sentido como dois cards separados, um só de nome e outro só de preço.
+Conjuração começou dentro de Serviços, mas saiu pra card próprio por pedido do
+Danilo — não é uma lista de preço fixo (é uma fórmula), então não cabia junto
+com a busca com filtro.
+
+Quatro cards que **geram** alguma coisa (Contador de Palavras, Tempo de
+Viagem, Taverna, Gerador de NPCs) têm um botão **Limpar**, que volta ao estado
+inicial (e, no Contador, também apaga o rascunho salvo).
 
 ### Equipamentos
 
@@ -41,13 +49,17 @@ categoria, igual ao card Buscar na Base do Mio da Feada.
 Busca com filtro por categoria, igual a Equipamentos — referência que o Danilo
 passou (Carruagem entre/dentro de cidades, Passagem de Navio, Pedágio,
 Contratado Especializado/Sem Treinamento, Mensageiro), convertida pra po/pp/pc.
-Acima da lista, um calculador separado pra conjuração: a regra oficial **não
-tem preço fixo por magia**, e sim uma fórmula por nível do espaço usado,
-**10 po × nível²** (é assim que o próprio PHB chega nos ~20 exemplos que
-lista). Preferi a fórmula a copiar só os exemplos do livro: cobre qualquer
-magia que pedirem, não só as que o PHB escolheu ilustrar. Exceção conhecida:
-Identificar custa 20 po (o dobro, por causa do componente de pérola) — fica
-anotada no card.
+Só a lista — o calculador de conjuração é um card à parte (ver Conjuração).
+
+### Conjuração
+
+Quanto custa contratar um conjurador pra lançar uma magia por você. A regra
+oficial **não tem preço fixo por magia**, e sim uma fórmula por nível do
+espaço usado, **10 po × nível²** (é assim que o próprio PHB chega nos ~20
+exemplos que lista). Preferi a fórmula a copiar só os exemplos do livro: cobre
+qualquer magia que pedirem, não só as que o PHB escolheu ilustrar. Exceção
+conhecida: Identificar custa 20 po (o dobro, por causa do componente de
+pérola) — fica anotada no card.
 
 ### Taverna
 
@@ -56,18 +68,20 @@ card, por pedido do Danilo. Cabeçalho com 6 seletores (tipo de hospedagem,
 especialidade da cozinha, número de ajudantes, raça/sexo/humor do
 taverneiro(a); tudo com opção "aleatório"); ao clicar em **Gerar**, o card
 mostra nome da taverna, uma descrição breve (sem rumores — o Danilo cria os
-dele), o taverneiro(a) e os ajudantes (raça/nome sorteados da mesma tabela do
-Gerador de NPCs — ver `js/data/races.js`), e dois cardápios com preço:
-**pratos** (10 especialidades de cozinha à escolha, de Alta Cozinha a Comida
-Exótica) e **bebidas** (uma lista só, não varia por especialidade). O tipo de
-hospedagem controla quantos itens o cardápio tem — de 1 (Miserável) a 5
-(Rica/Aristocrática).
+dele), o preço de **hospedagem por dia** (número oficial do PHB pro tipo
+escolhido), o taverneiro(a) e os ajudantes (raça/nome sorteados da mesma
+tabela do Gerador de NPCs — ver `js/data/races.js`), e dois cardápios com
+preço: **pratos** (10 especialidades de cozinha à escolha, de Alta Cozinha a
+Comida Exótica) e **bebidas** (uma lista só, não varia por especialidade). O
+tipo de hospedagem controla quantos itens o cardápio tem — de 1 (Miserável) a
+5 (Rica/Aristocrática).
 
 Preço de prato/bebida **não é um número oficial**: o PHB só lista o preço de
 "uma refeição por dia" por nível de hospedagem (tabela "Food, Drink, and
 Lodging"), não o de um prato avulso — uso esse valor oficial como base e vario
 um pouco por item, pra dar alguma diversidade de preço dentro do mesmo
-cardápio. Se isso não for o que você queria, me avisa que ajusto a régua.
+cardápio. Já o preço de **hospedagem** em si vem direto dessa mesma tabela,
+sem extrapolação nenhuma — é um número oficial de verdade.
 
 ### Tempo de Viagem
 
@@ -81,11 +95,16 @@ os números; se a mesa usa outra, é a constante `HORAS_POR_DIA` no topo de
 
 ### Gerador de NPCs
 
-8 raças originais + **Meio-Orc** e **Warforged**. Não achei uma raça de
-D&D/Pathfinder chamada **Tangata** nem sub-raças oficiais para essas três, então
-deixei de fora por enquanto — para não inventar nomes que destoem do que você já
-usa em Netéria. Warforged usa o mesmo grupo de nomes para os dois gêneros
-(não tem gênero biológico).
+8 raças originais + **Meio-Orc**, **Warforged** e **Tangata** — mais um
+seletor de **profissão** (14 opções, de taverneiro(a) a espião(ã) amador(a)),
+além de raça e gênero, todos com opção "aleatório". Warforged usa o mesmo
+grupo de nomes para os dois gêneros (não tem gênero biológico).
+
+**Tangata** não existe como raça oficial de D&D/Pathfinder, e não é do
+material de mesa do Danilo — ele confirmou e me deu liberdade pra inventar.
+Os nomes (`js/data/races.js`) são **fictícios, sem fonte real**: usei o
+próprio significado da palavra ("tangata" = "pessoa" em Māori) como pista de
+estilo, nomes de sabor polinésio/Māori.
 
 ## A grade de cards
 

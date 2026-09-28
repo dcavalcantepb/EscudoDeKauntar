@@ -37,6 +37,7 @@ TOOLS.push({
           <option value="rapido">Rápido</option>
         </select>
         <input class="field" style="width:6rem" type="number" min="0" step="1" data-f="distancia" placeholder="km">
+        <button class="btn btn--sm" style="margin-left:auto" data-act="limpar">Limpar</button>
       </div>
       <div class="gen__result"><p class="gen__empty">Informe a distância para calcular.</p></div>`;
     const fMeio = el.querySelector('[data-f="meio"]');
@@ -63,6 +64,10 @@ TOOLS.push({
         <p class="gen__line"><b>${kmDia} km/dia</b> nesse ritmo · ${HORAS_POR_DIA}h de viagem por dia</p>`;
     }
     [fMeio, fRitmo, fDist].forEach(f => f.addEventListener('input', calcular));
+    el.querySelector('[data-act="limpar"]').addEventListener('click', () => {
+      fMeio.selectedIndex = 0; fRitmo.value = 'normal'; fDist.value = '';
+      calcular();
+    });
     calcular();
   }
 });

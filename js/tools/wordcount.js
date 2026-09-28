@@ -17,6 +17,7 @@ TOOLS.push({
       <div class="wc__stats">
         <span><b class="wc__words">0</b>palavras</span>
         <span><b class="wc__chars">0</b>caracteres</span>
+        <button class="btn btn--sm" style="margin-left:auto" data-act="limpar">Limpar</button>
       </div>`;
     const ta = el.querySelector('.wc__area');
     const words = el.querySelector('.wc__words');
@@ -33,6 +34,12 @@ TOOLS.push({
       timer = setTimeout(() => { try{ localStorage.setItem(KEY, text); }catch(_){} }, 400);
     }
     ta.addEventListener('input', update);
+    el.querySelector('[data-act="limpar"]').addEventListener('click', () => {
+      ta.value = '';
+      try{ localStorage.removeItem(KEY); }catch(_){}
+      update();
+      ta.focus();
+    });
     update();
   }
 });
