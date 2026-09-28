@@ -1,6 +1,6 @@
 # Escudo de Kauntar
 
-Painel pessoal do Mestre para as Lendas de Netéria: nove ferramentas rápidas
+Painel pessoal do Mestre para as Lendas de Netéria: onze ferramentas rápidas
 numa grade de cards, cada uma no tamanho que você quiser, em qualquer posição
 livre da grade. Site estático (HTML + CSS + JS puro, sem build), hospedado no
 GitHub Pages, com a mesma identidade visual do
@@ -8,7 +8,7 @@ GitHub Pages, com a mesma identidade visual do
 contrário dele, **é um painel privado**: a página inteira fica atrás de login,
 não só o editor.
 
-## As nove ferramentas
+## As onze ferramentas
 
 | # | Ferramenta | Estado |
 |---|---|---|
@@ -16,19 +16,21 @@ não só o editor.
 | 2 | **Bloco de Notas** com abas, ao estilo OneNote | Pronta |
 | 3 | **Tempo de Viagem** | Pronta |
 | 4 | **Equipamentos** — busca de preços (armas, armaduras, montarias…) | Pronta |
-| 5 | **Serviços** — busca de preços (carruagem, contratado, mensageiro…) | Pronta |
-| 6 | **Conjuração** — quanto custa contratar um conjurador | Pronta |
-| 7 | **Taverna** — gera taverna, cardápio, taverneiro(a) e ajudantes | Pronta |
-| 8 | **Gerador de NPCs** | Pronta (9 raças, +Meio-Orc, Warforged e Tangata) |
-| 9 | **Buscar na Base do Mio da Feada** | Pronta |
+| 5 | **Itens Mágicos** — busca de preços (307 itens) | Pronta |
+| 6 | **Serviços** — busca de preços (carruagem, contratado, mensageiro…) | Pronta |
+| 7 | **Conjuração** — quanto custa contratar um conjurador | Pronta |
+| 8 | **Taverna** — gera taverna, cardápio, taverneiro(a) e ajudantes | Pronta |
+| 9 | **Gerador de NPCs** | Pronta (9 raças, +Meio-Orc, Warforged e Tangata) |
+| 10 | **Rules** — referência de regras, em inglês, texto oficial | Pronta |
+| 11 | **Buscar na Base do Mio da Feada** | Pronta |
 
 Preços de itens/serviços viraram **cards separados** por pedido do Danilo
-(Equipamentos ≠ Serviços ≠ Conjuração ≠ Taverna). O antigo "Gerador de
-Tavernas" (uma ferramenta própria) foi fundido dentro do card Taverna — não
-faziam sentido como dois cards separados, um só de nome e outro só de preço.
-Conjuração começou dentro de Serviços, mas saiu pra card próprio por pedido do
-Danilo — não é uma lista de preço fixo (é uma fórmula), então não cabia junto
-com a busca com filtro.
+(Equipamentos ≠ Itens Mágicos ≠ Serviços ≠ Conjuração ≠ Taverna). O antigo
+"Gerador de Tavernas" (uma ferramenta própria) foi fundido dentro do card
+Taverna — não faziam sentido como dois cards separados, um só de nome e outro
+só de preço. Conjuração começou dentro de Serviços, mas saiu pra card próprio
+por pedido do Danilo — não é uma lista de preço fixo (é uma fórmula), então
+não cabia junto com a busca com filtro.
 
 Quatro cards que **geram** alguma coisa (Contador de Palavras, Tempo de
 Viagem, Taverna, Gerador de NPCs) têm um botão **Limpar**, que volta ao estado
@@ -43,6 +45,21 @@ traduzi os nomes pro português (mantive em inglês só os poucos instrumentos q
 não são do time padrão do PHB, tipo "Glaur" e "Wargong" — não são nomes reais
 com tradução conhecida) e **converti o peso pra quilos**. Busca com filtro por
 categoria, igual ao card Buscar na Base do Mio da Feada.
+
+### Itens Mágicos
+
+307 itens mágicos com preço fixo, busca com filtro por categoria (Consumíveis,
+Itens de Combate, Itens Fora de Combate, Itens de Invocação, Itens que Mudam o
+Jogo — as mesmas 5 categorias do documento original), igual Equipamentos.
+Fonte: **"Sane Magic Item Prices"** (Saidoro, 2015, publicado nos fóruns do
+GiantITP) — a alternativa mais usada pela comunidade à faixa de rareza oficial
+da DMG, que é larga demais pra ser prática (Raro, por exemplo, cobre "501 a
+5000 po" pra qualquer coisa de uma Espada Flamejante a uma Bola de Cristal).
+Peguei os dados brutos direto da conversão em JSON mantida por
+`TheGiddyLimit/homebrew` no GitHub — não é resumo nem aproximação, são os 307
+itens do documento original, cada um com o preço exato que o Saidoro definiu.
+Nomes traduzidos por mim pro português (nome em inglês fica entre parênteses,
+e a busca aceita os dois — útil se você lembrar só do nome em inglês).
 
 ### Serviços
 
@@ -105,6 +122,28 @@ material de mesa do Danilo — ele confirmou e me deu liberdade pra inventar.
 Os nomes (`js/data/races.js`) são **fictícios, sem fonte real**: usei o
 próprio significado da palavra ("tangata" = "pessoa" em Māori) como pista de
 estilo, nomes de sabor polinésio/Māori.
+
+### Rules
+
+O único card que fica **em inglês de propósito** (pedido explícito do
+Danilo): busca uma regra pelo nome — digite "prone" e o card mostra a
+condição Prone com a descrição completa — filtrando por categoria (Conditions,
+Combat Actions, Rest, Cover & Vision). Cobre as 15 condições oficiais, as 10
+ações padrão de combate (Attack, Cast a Spell, Dash, Disengage, Dodge, Help,
+Hide, Ready, Search, Use an Object), descanso curto/longo, e cobertura/visão
+(half/three-quarters/total cover, lightly/heavily obscured, darkvision,
+blindsight, truesight) — 29 entradas ao todo.
+
+Texto **oficial da regra de 2014** (o 2024 nunca entra aqui, por pedido
+explícito) — não é D&D Beyond nem Roll20: ambos são conteúdo pago/protegido
+por direitos autorais, e eu não posso raspar nem republicar o texto de
+nenhum dos dois. A fonte real é o **SRD 5.1** (System Reference Document),
+o subconjunto das regras de 2014 que a própria Wizards of the Coast libera
+pra reuso (hoje sob Creative Commons) — o texto das condições e ações ali é
+**idêntico, palavra por palavra**, ao apêndice do PHB, porque é exatamente
+essa parte do livro que a WotC decidiu abrir. Peguei o conteúdo já
+estruturado em JSON pela [5e-SRD-API](https://www.dnd5eapi.co/) (endpoint
+`/api/2014/`), sem resumir nem reescrever nada.
 
 ## A grade de cards
 
