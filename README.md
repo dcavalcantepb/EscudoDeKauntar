@@ -128,11 +128,19 @@ estilo, nomes de sabor polinésio/Māori.
 O único card que fica **em inglês de propósito** (pedido explícito do
 Danilo): busca uma regra pelo nome — digite "prone" e o card mostra a
 condição Prone com a descrição completa — filtrando por categoria (Conditions,
-Combat Actions, Rest, Cover & Vision). Cobre as 15 condições oficiais, as 10
-ações padrão de combate (Attack, Cast a Spell, Dash, Disengage, Dodge, Help,
-Hide, Ready, Search, Use an Object), descanso curto/longo, e cobertura/visão
-(half/three-quarters/total cover, lightly/heavily obscured, darkvision,
-blindsight, truesight) — 29 entradas ao todo.
+Combat Actions, Rest, Cover & Vision, Movement, Death & Dying). Cobre as 15
+condições oficiais, 11 ações/manobras de combate (Attack, Cast a Spell, Dash,
+Disengage, Dodge, Grapple, Help, Hide, Ready, Search, Use an Object), descanso
+curto/longo, cobertura/visão (half/three-quarters/total cover, lightly/heavily
+obscured, darkvision, blindsight, truesight), Jumping (long/high jump) e Death
+(instant death, death saving throws, estabilizar) — 32 entradas ao todo.
+
+**Grapple** e **Jumping** não são artigos próprios no SRD — são subseções
+dentro de artigos maiores ("Melee Attacks" e "Special Types of Movement"). Pra
+manter a busca funcionando do jeito que o Danilo pediu (digitar "grapple" e
+achar a regra), extraí só a subseção relevante de cada um, em vez do artigo
+inteiro — mesmo princípio já usado em Cover/Vision and Light, que também são
+recortes de um artigo maior ("Combat").
 
 Texto **oficial da regra de 2014** (o 2024 nunca entra aqui, por pedido
 explícito) — não é D&D Beyond nem Roll20: ambos são conteúdo pago/protegido
